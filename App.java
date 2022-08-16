@@ -37,7 +37,12 @@ public class App {
     }
 
     private static int somaArrayRec(int vet[], int i) {
-        return 0;
+        if (i == vet.length-1) {
+            return vet[i];
+        }
+        else {
+            return vet[i] + somaArrayRec(vet, i + 1);
+        }
     }
 
     public static void main(String[] args) {
