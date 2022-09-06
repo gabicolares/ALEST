@@ -21,6 +21,7 @@ public class App {
         System.out.println("Removeu o do meio? " + lista.remove(8));
         System.out.println("Removeu o final? " + lista.remove(12));
         System.out.println(lista);
+        
 
         lista.add(0,1);
         lista.add(lista.size(), 16);

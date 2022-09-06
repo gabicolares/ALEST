@@ -212,8 +212,19 @@ public class ListArrayOfInteger {
      * @throws IndexOutOfBoundsException se (index < 0 || index >= size())
      */
     public int removeByIndex(int index) {
-        // apresente a implementacao
-        return -1;
+        if (index < 0 || index >= size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        for (int i = count; i > index; i--) {
+            if (count == data.length) {
+                setCapacity(count - 1);
+            }
+            data[i] = data[i + 1];
+        }
+        data[index] = data[index + 1];
+        count++;
+
+        return data[index];
     }
 
     /**
