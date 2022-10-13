@@ -1,19 +1,39 @@
 
 public class PilhaEncadeada {
 
+    // Classe interna Node
     private class Node {
         public Integer element;
-        public Node next; 
-        public Node(Integer e) {
-            element = e;
+        public Node next;
+
+        public Node(Integer element) {
+            this.element = element;
             next = null;
         }
-    }
-    private Node topo;
-    private int count;
-    
-    public PilhaEncadeada() {
         
+        public Node(Integer element, Node next) {
+            this.element = element;
+            this.next = next;
+        }        
+    }
+
+    
+    // Referência para o primeiro elemento da lista encadeada.
+    private Node head;
+    // Referência para o último elemento da lista encadeada.
+    private Node tail;
+    // Contador para a quantidade de elementos que a lista contem.
+    private int count;
+
+    
+    /**
+     * Construtor da lista.
+     */
+    public PilhaEncadeada
+        () {
+        head = null;
+        tail = null;
+        count = 0;
     }
     
     // insere o elemento e no topo da pilha
