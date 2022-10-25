@@ -24,8 +24,8 @@ public class BinaryTreeOfInteger {
     }
 
     // Atributos
-    private int count; //contagem do número de nodos
-    private Node root; //referência para o nodo raiz
+    private int count; // contagem do número de nodos
+    private Node root; // referência para o nodo raiz
 
     // Metodos
     public BinaryTreeOfInteger() {
@@ -79,8 +79,10 @@ public class BinaryTreeOfInteger {
      * @return pai de element
      */
     public Integer getParent(Integer element) {
-        // Implementar
-        return null;
+        Node aux = searchNodeRef(element, root);
+        if (root.element == null)
+            return null;
+        return aux.father.element;
     }
 
     /**
@@ -89,14 +91,15 @@ public class BinaryTreeOfInteger {
      * @param element a ser colocado na raiz da arvore.
      */
     public void setRoot(Integer element) {
-         // Implementar
+        root.element = element;
     }
 
     /**
      * Insere o elemento como raiz da arvore, se a arvore estiver vazia.
+     * 
      * @param element a ser inserido.
      * @return true se for feita a insercao, e false caso a arvore nao estiver
-     * vazia e a insercao não for feita.
+     *         vazia e a insercao não for feita.
      */
     public boolean addRoot(Integer element) {
         if (root != null) // se a arvore nao estiver vazia
@@ -108,23 +111,23 @@ public class BinaryTreeOfInteger {
 
     /**
      * Insere element a esquerda de elemFather. Se nao encontrar father,
-     * ou se father ja tiver um filho a esquerda, element nao e´ 
+     * ou se father ja tiver um filho a esquerda, element nao e´
      * inserido.
      *
-     * @param element a ser inserido
+     * @param element    a ser inserido
      * @param elemFather pai do elemento a ser inserido
      * @return true se foi feita a inserção, e false caso contrario.
      */
     public boolean addLeft(Integer element, Integer elemFather) {
-       Node aux = searchNodeRef(elemFather, root);
+        Node aux = searchNodeRef(elemFather, root);
 
         if (aux == null) {
-           return false;
+            return false;
         }
         if (aux.left != null) {
-               return false;
-           }
-       
+            return false;
+        }
+
         Node n = new Node(element);
         aux.left = n;
 
@@ -133,10 +136,10 @@ public class BinaryTreeOfInteger {
 
     /**
      * Insere element a direita de elemFather. Se nao encontrar father,
-     * ou se father ja tiver um filho a direita, element nao e´ 
+     * ou se father ja tiver um filho a direita, element nao e´
      * inserido.
      *
-     * @param element a ser inserido
+     * @param element    a ser inserido
      * @param elemFather pai do elemento a ser inserido
      * @return true se foi feita a inserção, e false caso contrario.
      */
@@ -144,17 +147,17 @@ public class BinaryTreeOfInteger {
         Node aux = searchNodeRef(elemFather, root);
 
         if (aux == null) {
-           return false;
+            return false;
         }
         if (aux.right != null) {
-               return false;
-           }
-       
+            return false;
+        }
+
         Node n = new Node(element);
         aux.right = n;
 
         return true;
-        
+
     }
 
     /**
@@ -201,7 +204,11 @@ public class BinaryTreeOfInteger {
      * @return true se for feita a remocao.
      */
     public boolean removeBranch(Integer element) {
-        // Implementar       
+        Node aux = searchNodeRef(element, root);
+        if (aux != null) {
+            aux = null;
+            return true;
+        }
         return false;
     }
 
@@ -214,13 +221,18 @@ public class BinaryTreeOfInteger {
     /**
      * Troca um elemento da arvore pelo elemento passado por parametro.
      *
-     * @param old elemento a ser encontrado para ser substituido.
+     * @param old     elemento a ser encontrado para ser substituido.
      * @param element elemento a ser colocado no lugar de old.
      * @return true se fez a troca, false caso contrario.
      */
     public boolean set(Integer old, Integer element) {
-        // Implementar
+        Node aux = searchNodeRef(old, root);
+        if (aux != null) {
+        aux.element = element;
+        return true;
+        }
         return false;
+        
     }
 
     /**
@@ -229,8 +241,12 @@ public class BinaryTreeOfInteger {
      * @param element
      * @return true se element esta em um nodo externo.
      */
+
     public boolean isExternal(Integer element) {
-        // Implementar
+        Node aux = searchNodeRef(element, root);
+        if (aux.left == null && aux.right == null) {
+            return true;
+        }
         return false;
     }
 
@@ -241,7 +257,10 @@ public class BinaryTreeOfInteger {
      * @return true se element esta em um nodo interno.
      */
     public boolean isInternal(Integer element) {
-        // Implementar
+        Node aux = searchNodeRef(element, root);
+        if (aux.right != null || aux.left != null) {
+            return true;
+        }
         return false;
     }
 
@@ -252,7 +271,10 @@ public class BinaryTreeOfInteger {
      * @return true se element tem um filho a esquerda, false caso contrario.
      */
     public boolean hasLeft(Integer element) {
-        // Implementar
+        Node aux = searchNodeRef(element, root);
+        if (aux.left != null) {
+            return true;
+        }
         return false;
     }
 
@@ -263,9 +285,13 @@ public class BinaryTreeOfInteger {
      * @return true se element tem um filho a direita, false caso contrario.
      */
     public boolean hasRight(Integer element) {
-        // Implementar
+        Node aux = searchNodeRef(element, root);
+        if (aux.right != null) {
+            return true;
+        }
         return false;
     }
+    
 
     /**
      * Retorna o filho a esquerda de element.
@@ -274,7 +300,10 @@ public class BinaryTreeOfInteger {
      * @return o filho a esquerda, ou null se nao tiver filho a esquerda.
      */
     public Integer getLeft(Integer element) {
-        // Implementar
+        Node aux = searchNodeRef(element, root);
+        if (aux.left != null) {
+            return aux.left.element;
+        }
         return null;
     }
 
@@ -285,7 +314,10 @@ public class BinaryTreeOfInteger {
      * @return o filho a direita, ou null se nao tiver filho a direita.
      */
     public Integer getRight(Integer element) {
-        // Implementar
+        Node aux = searchNodeRef(element, root);
+        if (aux.right != null) {
+            return aux.right.element;
+        }
         return null;
     }
 
@@ -387,13 +419,45 @@ public class BinaryTreeOfInteger {
     }
 
     public int height() {
-        // Implementar
-        return -1;
+        return height(root);
+    }
+
+    private int height(Node n) {
+        if (n == null) {
+            return 0;
+        }
+        if (n.left == null && n.right == null) {
+            return 0;
+        }
+        return 1 + Math.max(height(n.left), height(n.right));
+    }
+
+    public int countLeaves() {
+        return countLeaves(root);
+    }
+
+    private int countLeaves(Node n) {
+        if (n == null) {
+            return 0;
+        }
+        if (n.left == null && n.right == null) {
+            return 1;
+        }
+        return countLeaves(n.left) + countLeaves(n.right);
     }
 
     public int level(Integer element) {
-        // Implementar
-        return -1;
+        int level = 0;
+        Node aux = searchNodeRef(element, root);
+        if (aux == null) {
+            return 0;
+        }
+        while (aux != null) {
+            aux = aux.father;
+            level++;
+        }
+
+        return level;
     }
 
     private void GeraConexoesDOT(Node nodo) {
@@ -402,17 +466,17 @@ public class BinaryTreeOfInteger {
         }
 
         GeraConexoesDOT(nodo.left);
-        //   "nodeA":esq -> "nodeB" [color="0.650 0.700 0.700"]
+        // "nodeA":esq -> "nodeB" [color="0.650 0.700 0.700"]
         if (nodo.left != null) {
             System.out.println("\"node" + nodo.element + "\":esq -> \"node" + nodo.left.element + "\" " + "\n");
         }
 
         GeraConexoesDOT(nodo.right);
-        //   "nodeA":dir -> "nodeB";
+        // "nodeA":dir -> "nodeB";
         if (nodo.right != null) {
             System.out.println("\"node" + nodo.element + "\":dir -> \"node" + nodo.right.element + "\" " + "\n");
         }
-        //"[label = " << nodo->hDir << "]" <<endl;
+        // "[label = " << nodo->hDir << "]" <<endl;
     }
 
     private void GeraNodosDOT(Node nodo) {
@@ -420,7 +484,7 @@ public class BinaryTreeOfInteger {
             return;
         }
         GeraNodosDOT(nodo.left);
-        //node10[label = "<esq> | 10 | <dir> "];
+        // node10[label = "<esq> | 10 | <dir> "];
         System.out.println("node" + nodo.element + "[label = \"<esq> | " + nodo.element + " | <dir> \"]" + "\n");
         GeraNodosDOT(nodo.right);
     }
@@ -438,7 +502,7 @@ public class BinaryTreeOfInteger {
     // Versoes online do GraphViz pode ser encontradas em
     // http://www.webgraphviz.com/
     // http://viz-js.com/
-    // https://dreampuf.github.io/GraphvizOnline 
+    // https://dreampuf.github.io/GraphvizOnline
     public void GeraDOT() {
         System.out.println("digraph g { \nnode [shape = record,height=.1];\n" + "\n");
 
