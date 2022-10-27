@@ -1,0 +1,219 @@
+
+
+public class BinarySearchTreeOfInteger {
+
+    private static final class Node {
+
+        public Node father;
+        public Node left;
+        public Node right;
+        public Integer element;
+
+        public Node(Integer element) {
+            father = null;
+            left = null;
+            right = null;
+            this.element = element;
+        }
+    }
+
+    // Atributos        
+    private int count; //contagem do número de nodos
+    private Node root; //referência para o nodo raiz
+
+    public BinarySearchTreeOfInteger() {
+        count = 0;
+        root = null;
+    }
+
+    public void clear() {
+        count = 0;
+        root = null;
+    }
+
+    public boolean isEmpty() {
+        return (root == null);
+    }
+
+    public int size() {
+        return count;
+    }
+
+    public Integer getRoot() {
+        if (isEmpty()) {
+            throw new EmptyTreeException();
+        }
+        return root.element;
+    }
+
+    public void add(Integer element) {
+            root = add(root, element, null);
+            count++;
+
+
+    }
+
+    private Node add(Node n, Integer element, Node father) {
+        if (n == null) { //insere
+            Node aux = new Node(element);
+            aux.father = father;
+            return aux;
+        }
+        // senão insere na subavore da esquerda ou da direita
+        if (n.element.compareTo(element) < 0) {
+            // direita
+            n.right = add(n.right, element, n);
+        }
+
+        else {
+            // esquerda
+            n.left = add(n.left, element, n);
+        }
+        return n;
+    }
+
+    public Integer getLeft(Integer element) {
+
+        return null;
+    }
+
+    public Integer getRight(Integer element) {
+        return null;
+    }
+
+    public Integer getParent(Integer element) {
+        return null;
+    }
+
+    public LinkedListOfInteger positionsPre() {
+        LinkedListOfInteger res = new LinkedListOfInteger();
+        positionsPreAux(root, res);
+        return res;
+    }
+
+    private void positionsPreAux(Node n, LinkedListOfInteger res) {
+        if (n != null) {
+            res.add(n.element); //Visita o nodo
+            positionsPreAux(n.left, res); //Visita a subárvore da esquerda
+            positionsPreAux(n.right, res); //Visita a subárvore da direita
+        }
+    }
+
+    public LinkedListOfInteger positionsPos() {
+        LinkedListOfInteger res = new LinkedListOfInteger();
+        positionsPosAux(root, res);
+        return res;
+    }
+
+    private void positionsPosAux(Node n, LinkedListOfInteger res) {
+        if (n != null) {
+            positionsPosAux(n.left, res); //Visita a subárvore da esquerda
+            positionsPosAux(n.right, res); //Visita a subárvore da direita
+            res.add(n.element); //Visita o nodo
+        }
+    }
+
+    public LinkedListOfInteger positionsCentral() {
+        LinkedListOfInteger res = new LinkedListOfInteger();
+        positionsCentralAux(root, res);
+        return res;
+    }
+
+    private void positionsCentralAux(Node n, LinkedListOfInteger res) {
+        if (n != null) {
+            positionsCentralAux(n.left, res); //Visita a subárvore da esquerda
+            res.add(n.element); //Visita o nodo
+            positionsCentralAux(n.right, res); //Visita a subárvore da direita
+        }
+    }
+
+    public LinkedListOfInteger positionsWidth() {
+        Queue<Node> fila = new Queue<>();
+        Node atual = null;
+        LinkedListOfInteger res = new LinkedListOfInteger();
+        if (root != null) {
+            fila.enqueue(root);
+            while (!fila.isEmpty()) {
+                atual = fila.dequeue();
+                if (atual.left != null) {
+                    fila.enqueue(atual.left);
+                }
+                if (atual.right != null) {
+                    fila.enqueue(atual.right);
+                }
+                res.add(atual.element);
+            }
+        }
+        return res;
+    }
+
+    public String strTraversalCentral() {
+        return strTraversalCentral(root);
+    }
+
+    private String strTraversalCentral(Node n) {
+        return null;
+    }
+
+    public boolean contains(Integer element) {
+        return false;
+    }
+
+    private Node searchNodeRef(Integer element, Node target) {
+        if (element == null || target == null) {
+            return null;
+        }
+        int c = target.element.compareTo(element);
+
+        if (c == 0) {
+            return target;
+        }
+        else if (c > 0) {
+            return searchNodeRef(element, target.left);
+        }
+
+        else {
+            return searchNodeRef(element, target.right);
+        }
+
+    }
+
+    public boolean remove(Integer element) {
+
+        return false;
+    }
+
+    public Integer getSmallest() {
+        Node n = smallest(root);
+
+        if (n == null) {
+            return null;
+        }
+
+        return n.element;
+    }
+
+    private Node smallest(Node n) {
+        if (n == null) {
+        return null;
+        }
+
+        while (n.left != null) {
+            n = n.left;
+        }
+
+        return n;
+    }
+
+    public Integer set(Integer old, Integer element) {
+        return null;
+    }
+
+    public boolean isExternal(int element) {
+        return false;
+    }
+
+    public boolean isInternal(int element) {
+        return false;
+    }
+}
