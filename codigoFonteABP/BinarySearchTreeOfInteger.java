@@ -15,9 +15,9 @@ public class BinarySearchTreeOfInteger {
         }
     }
 
-    // Atributos        
-    private int count; //contagem do número de nodos
-    private Node root; //referência para o nodo raiz
+    // Atributos
+    private int count; // contagem do número de nodos
+    private Node root; // referência para o nodo raiz
 
     public BinarySearchTreeOfInteger() {
         count = 0;
@@ -45,14 +45,13 @@ public class BinarySearchTreeOfInteger {
     }
 
     public void add(Integer element) {
-            root = add(root, element, null);
-            count++;
-
+        root = add(root, element, null);
+        count++;
 
     }
 
     private Node add(Node n, Integer element, Node father) {
-        if (n == null) { //insere
+        if (n == null) { // insere
             Node aux = new Node(element);
             aux.father = father;
             return aux;
@@ -91,9 +90,9 @@ public class BinarySearchTreeOfInteger {
 
     private void positionsPreAux(Node n, LinkedListOfInteger res) {
         if (n != null) {
-            res.add(n.element); //Visita o nodo
-            positionsPreAux(n.left, res); //Visita a subárvore da esquerda
-            positionsPreAux(n.right, res); //Visita a subárvore da direita
+            res.add(n.element); // Visita o nodo
+            positionsPreAux(n.left, res); // Visita a subárvore da esquerda
+            positionsPreAux(n.right, res); // Visita a subárvore da direita
         }
     }
 
@@ -105,9 +104,9 @@ public class BinarySearchTreeOfInteger {
 
     private void positionsPosAux(Node n, LinkedListOfInteger res) {
         if (n != null) {
-            positionsPosAux(n.left, res); //Visita a subárvore da esquerda
-            positionsPosAux(n.right, res); //Visita a subárvore da direita
-            res.add(n.element); //Visita o nodo
+            positionsPosAux(n.left, res); // Visita a subárvore da esquerda
+            positionsPosAux(n.right, res); // Visita a subárvore da direita
+            res.add(n.element); // Visita o nodo
         }
     }
 
@@ -119,9 +118,9 @@ public class BinarySearchTreeOfInteger {
 
     private void positionsCentralAux(Node n, LinkedListOfInteger res) {
         if (n != null) {
-            positionsCentralAux(n.left, res); //Visita a subárvore da esquerda
-            res.add(n.element); //Visita o nodo
-            positionsCentralAux(n.right, res); //Visita a subárvore da direita
+            positionsCentralAux(n.left, res); // Visita a subárvore da esquerda
+            res.add(n.element); // Visita o nodo
+            positionsCentralAux(n.right, res); // Visita a subárvore da direita
         }
     }
 
@@ -165,8 +164,7 @@ public class BinarySearchTreeOfInteger {
 
         if (c == 0) {
             return target;
-        }
-        else if (c > 0) {
+        } else if (c > 0) {
             return searchNodeRef(element, target.left);
         }
 
@@ -179,11 +177,11 @@ public class BinarySearchTreeOfInteger {
     public boolean remove(Integer element) {
         // se árvore está vazia
         if (element == null || root == null) {
-        return false;
+            return false;
         }
 
         Node aux = searchNodeRef(element, root);
-        if (aux == null) { // se não encontrou element 
+        if (aux == null) { // se não encontrou element
             return false;
         }
 
@@ -193,8 +191,10 @@ public class BinarySearchTreeOfInteger {
     }
 
     /**
-     * Método que faz a remoção. Recebe referẽncia para o nodo onde está o elemento a ser
+     * Método que faz a remoção. Recebe referẽncia para o nodo onde está o elemento
+     * a ser
      * removido
+     * 
      * @param n referencia do elemento
      */
     private void remove(Node n) {
@@ -207,8 +207,7 @@ public class BinarySearchTreeOfInteger {
             }
             if (father.left == n) {
                 father.left = null;
-            }
-            else {
+            } else {
                 father.right = null;
             }
         }
@@ -221,8 +220,7 @@ public class BinarySearchTreeOfInteger {
             }
             if (father.left == n) {
                 father.left = n.right;
-            }
-            else {
+            } else {
                 father.right = n.right;
                 n.right.father = father;
             }
@@ -236,15 +234,14 @@ public class BinarySearchTreeOfInteger {
             }
             if (father.right == n) {
                 father.right = n.left;
-            }
-            else {
+            } else {
                 father.right = n.left;
                 n.left.father = father;
             }
         }
 
         else { // remoção de um nodo com dois filhos
-            // pega a referencia para o nodo que contem o menor elemento do lado direito
+               // pega a referencia para o nodo que contem o menor elemento do lado direito
             Node menor = smallest(n.right);
             n.element = menor.element;
             remove(menor);
@@ -263,7 +260,7 @@ public class BinarySearchTreeOfInteger {
 
     private Node smallest(Node n) {
         if (n == null) {
-        return null;
+            return null;
         }
 
         while (n.left != null) {
@@ -284,7 +281,7 @@ public class BinarySearchTreeOfInteger {
     public boolean isInternal(int element) {
         return false;
     }
-    
+
     public BinarySearchTreeOfInteger clone() {
         BinarySearchTreeOfInteger tree = new BinarySearchTreeOfInteger();
         clone(root, tree);
@@ -293,9 +290,62 @@ public class BinarySearchTreeOfInteger {
 
     private void clone(Node n, BinarySearchTreeOfInteger tree) {
         if (n != null) {
-            tree.add(n.element); //Visita o nodo
-            clone(n.left, tree); //Visita a subárvore da esquerda
-            clone(n.right, tree); //Visita a subárvore da direita
+            tree.add(n.element); // Visita o nodo
+            clone(n.left, tree); // Visita a subárvore da esquerda
+            clone(n.right, tree); // Visita a subárvore da direita
         }
     }
+
+    private void GeraConexoesDOT(Node nodo) {
+        if (nodo == null) {
+            return;
+        }
+
+        GeraConexoesDOT(nodo.left);
+        // "nodeA":esq -> "nodeB" [color="0.650 0.700 0.700"]
+        if (nodo.left != null) {
+            System.out.println("\"node" + nodo.element + "\":esq -> \"node" + nodo.left.element + "\" " + "\n");
+        }
+
+        GeraConexoesDOT(nodo.right);
+        // "nodeA":dir -> "nodeB";
+        if (nodo.right != null) {
+            System.out.println("\"node" + nodo.element + "\":dir -> \"node" + nodo.right.element + "\" " + "\n");
+        }
+        // "[label = " << nodo->hDir << "]" <<endl;
+    }
+
+    private void GeraNodosDOT(Node nodo) {
+        if (nodo == null) {
+            return;
+        }
+        GeraNodosDOT(nodo.left);
+        // node10[label = "<esq> | 10 | <dir> "];
+        System.out.println("node" + nodo.element + "[label = \"<esq> | " + nodo.element + " | <dir> \"]" + "\n");
+        GeraNodosDOT(nodo.right);
+    }
+
+    public void GeraConexoesDOT() {
+        GeraConexoesDOT(root);
+    }
+
+    public void GeraNodosDOT() {
+        GeraNodosDOT(root);
+    }
+
+    // Gera uma saida no formato DOT
+    // Esta saida pode ser visualizada no GraphViz
+    // Versoes online do GraphViz pode ser encontradas em
+    // http://www.webgraphviz.com/
+    // http://viz-js.com/
+    // https://dreampuf.github.io/GraphvizOnline
+    public void GeraDOT() {
+        System.out.println("digraph g { \nnode [shape = record,height=.1];\n" + "\n");
+
+        GeraNodosDOT();
+        System.out.println("");
+        GeraConexoesDOT(root);
+        System.out.println("}" + "\n");
+    }
+
 }
