@@ -1,5 +1,3 @@
-
-
 public class BinarySearchTreeOfInteger {
 
     private static final class Node {
@@ -179,8 +177,78 @@ public class BinarySearchTreeOfInteger {
     }
 
     public boolean remove(Integer element) {
-
+        // se árvore está vazia
+        if (element == null || root == null) {
         return false;
+        }
+
+        Node aux = searchNodeRef(element, root);
+        if (aux == null) { // se não encontrou element 
+            return false;
+        }
+
+        remove(aux); // chama o método que faz realmente a remoção
+        count--; // atualiza o count
+        return true;
+    }
+
+    /**
+     * Método que faz a remoção. Recebe referẽncia para o nodo onde está o elemento a ser
+     * removido
+     * @param n referencia do elemento
+     */
+    private void remove(Node n) {
+        // guarda a referencia para o pai do elemento a ser removido
+        Node father = n.father;
+        if (n.left == null && n.right == null) { // remoção de nodo folha
+            if (root == n) { // se remoção da raiz
+                root = null;
+                return;
+            }
+            if (father.left == n) {
+                father.left = null;
+            }
+            else {
+                father.right = null;
+            }
+        }
+
+        else if (n.left == null && n.right != null) { // remoção de um nodo com filho à direita
+            if (root == n) { // se remoção da raiz que tem um filho a direita
+                root = root.right;
+                root.father = null;
+                return;
+            }
+            if (father.left == n) {
+                father.left = n.right;
+            }
+            else {
+                father.right = n.right;
+                n.right.father = father;
+            }
+        }
+
+        else if (n.left != null && n.right == null) { // remoção de nodo com filho à esquerda
+            if (root == n) { // se remoção da raiz que tem um filho a esquerda
+                root = root.left;
+                root.father = null;
+                return;
+            }
+            if (father.right == n) {
+                father.right = n.left;
+            }
+            else {
+                father.right = n.left;
+                n.left.father = father;
+            }
+        }
+
+        else { // remoção de um nodo com dois filhos
+            // pega a referencia para o nodo que contem o menor elemento do lado direito
+            Node menor = smallest(n.right);
+            n.element = menor.element;
+            remove(menor);
+        }
     }
 
     public Integer getSmallest() {
