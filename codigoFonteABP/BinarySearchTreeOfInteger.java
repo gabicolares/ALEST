@@ -284,4 +284,18 @@ public class BinarySearchTreeOfInteger {
     public boolean isInternal(int element) {
         return false;
     }
+    
+    public BinarySearchTreeOfInteger clone() {
+        BinarySearchTreeOfInteger tree = new BinarySearchTreeOfInteger();
+        clone(root, tree);
+        return tree;
+    }
+
+    private void clone(Node n, BinarySearchTreeOfInteger tree) {
+        if (n != null) {
+            tree.add(n.element); //Visita o nodo
+            clone(n.left, tree); //Visita a subárvore da esquerda
+            clone(n.right, tree); //Visita a subárvore da direita
+        }
+    }
 }
