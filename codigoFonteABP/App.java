@@ -9,6 +9,10 @@ public class App {
         b.add(2);
         b.add(20);
         b.add(38);
+
+        BinarySearchTreeOfInteger a = b.clone();
+
+        a.GeraDOT();
      }
    
 }
